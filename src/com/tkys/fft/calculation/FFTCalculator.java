@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class FFTCalculator {
     /**
      * 高速Fourier変換 (Cooley-Tukeyのアルゴリズム
-     * @param n
-     * @param x
-     * @param y
-     * @return
+     * @param n 標本点の数。2の整数乗に限る。
+     * @param x 実部
+     * @param y 虚部
+     * @return  正常終了で0を返す。
      */
     public int fft(int n, double[] x, double[] y) {
         int lastN = 0;
