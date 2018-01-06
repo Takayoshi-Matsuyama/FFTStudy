@@ -36,12 +36,15 @@ public class FFTCalculator {
         n4 = n / 4;
         if ((n != lastN) || (n == 0)) {
             lastN = n;
-            if (sinTable.size() != 0) {
-                sinTable.clear();
+            sinTable.clear();
+            bitRev.clear();
+            for (int a = 0; a < n +n4; a++) {
+                sinTable.add(0.0);
             }
-            if (bitRev.size() != 0) {
-                bitRev.clear();
+            for (int a = 0; a < n; a++) {
+                bitRev.add(0);
             }
+
             if (n == 0) {
                 return  0;
             }
