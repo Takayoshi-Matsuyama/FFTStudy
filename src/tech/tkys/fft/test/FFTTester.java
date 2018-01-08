@@ -1,6 +1,6 @@
-package com.tkys.fft.test;
+package tech.tkys.fft.test;
 
-import com.tkys.fft.calculation.FFTCalculator;
+import tech.tkys.fft.calculation.FFTCalculator;
 
 /**
  * FFTアルゴリズムのテストルーチン

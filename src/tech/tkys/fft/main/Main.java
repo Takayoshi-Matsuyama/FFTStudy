@@ -1,6 +1,6 @@
-package com.tkys.fft.main;
+package tech.tkys.fft.main;
 
-import com.tkys.fft.test.FFTTester;
+import tech.tkys.fft.test.FFTTester;
 
 public class Main {
 

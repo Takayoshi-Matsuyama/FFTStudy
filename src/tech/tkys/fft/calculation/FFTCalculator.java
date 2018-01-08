@@ -1,4 +1,4 @@
-package com.tkys.fft.calculation;
+package tech.tkys.fft.calculation;
 
 
 import java.util.ArrayList;
