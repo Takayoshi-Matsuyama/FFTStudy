@@ -79,19 +79,19 @@ public class FFTCalculator {
                 else {
                     s = sinTable.get(h);
                 }
-            }
 
-            for (i = j; i < n; i += k2) {
-                ik = i + k;
-                dx = s * y[ik] + c * x[ik];
-                dy = c * y[ik] - s * x[ik];
-                x[ik] = x[i] - dx;
-                x[i] += dx;
-                y[ik] = y[i] - dy;
-                y[i] += dy;
-            }
+                for (i = j; i < n; i += k2) {
+                    ik = i + k;
+                    dx = s * y[ik] + c * x[ik];
+                    dy = c * y[ik] - s * x[ik];
+                    x[ik] = x[i] - dx;
+                    x[i] += dx;
+                    y[ik] = y[i] - dy;
+                    y[i] += dy;
+                }
 
-            h += d;
+                h += d;
+            }
         }
 
         if (inverse == 0) {
