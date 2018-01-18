@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -16,10 +19,18 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="274.0" prefWidth="304.0">
+      <AnchorPane prefHeight="395.0" prefWidth="799.0">
          <children>
-            <Button fx:id="selectButton" layoutX="60.0" layoutY="49.0" mnemonicParsing="false" onAction="#onSelectButtionClicked" text="SELECT" />
-            <Button layoutX="69.0" layoutY="124.0" mnemonicParsing="false" text="Button" />
+            <Button fx:id="selectButton" layoutX="40.0" layoutY="29.0" mnemonicParsing="false" onAction="#onSelectButtionClicked" text="SELECT" />
+            <Button layoutX="159.0" layoutY="29.0" mnemonicParsing="false" text="Button" />
+            <LineChart layoutX="26.0" layoutY="120.0" prefHeight="235.0" prefWidth="347.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
          </children>
       </AnchorPane>
    </children>
