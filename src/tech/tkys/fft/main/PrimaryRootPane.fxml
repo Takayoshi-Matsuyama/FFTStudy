@@ -25,10 +25,10 @@
             <Button layoutX="159.0" layoutY="29.0" mnemonicParsing="false" text="Button" />
             <LineChart fx:id="timeSeriesLineChart" layoutX="26.0" layoutY="120.0" prefHeight="235.0" prefWidth="347.0">
               <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                <NumberAxis label="Time [s]" side="BOTTOM" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <NumberAxis label="Voltage [mV]" side="LEFT" />
               </yAxis>
             </LineChart>
          </children>
