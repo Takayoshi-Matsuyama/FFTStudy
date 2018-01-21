@@ -14,7 +14,7 @@ public class FFTCalculator {
      * @param y 虚部
      * @return  正常終了で0を返す。
      */
-    public int fft(int n, double[] x, double[] y) {
+    public int fft(int n, ArrayList<Double> x, ArrayList<Double> y) {
         int lastN = 0;
         ArrayList<Integer> bitRev = new ArrayList<Integer>();
         ArrayList<Double> sinTable = new ArrayList<Double>();
@@ -56,13 +56,13 @@ public class FFTCalculator {
         for (i = 0; i < n; i++) {
             j = bitRev.get(i);
             if (i < j) {
-                t = x[i];
-                x[i] = x[j];
-                x[j] = t;
+                t = x.get(i);
+                x.set(i, x.get(j));
+                x.set(j, t);
 
-                t = y[i];
-                y[i] = y[j];
-                y[j] = t;
+                t = y.get(i);
+                y.set(i, y.get(j));
+                y.set(j, t);
             }
         }
 
@@ -82,12 +82,12 @@ public class FFTCalculator {
 
                 for (i = j; i < n; i += k2) {
                     ik = i + k;
-                    dx = s * y[ik] + c * x[ik];
-                    dy = c * y[ik] - s * x[ik];
-                    x[ik] = x[i] - dx;
-                    x[i] += dx;
-                    y[ik] = y[i] - dy;
-                    y[i] += dy;
+                    dx = s * y.get(ik) + c * x.get(ik);
+                    dy = c * y.get(ik) - s * x.get(ik);
+                    x.set(ik, x.get(i) - dx);
+                    x.set(i, x.get(i) + dx);
+                    y.set(ik, y.get(i) - dy);
+                    y.set(i, y.get(i) + dy);
                 }
 
                 h += d;
@@ -96,8 +96,8 @@ public class FFTCalculator {
 
         if (inverse == 0) {
             for (i = 0; i < n; i++) {
-                x[i] /= n;
-                y[i] /= n;
+                x.set(i, x.get(i) / n);
+                y.set(i, y.get(i) / n);
             }
         }
 
