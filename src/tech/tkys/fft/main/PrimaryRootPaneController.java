@@ -3,6 +3,7 @@ package tech.tkys.fft.main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import tech.tkys.fft.test.FFTTestService;
 
 import java.util.ArrayList;
@@ -25,6 +26,15 @@ public class PrimaryRootPaneController {
         }
 
         ArrayList<Double> timeSeriesData = fftTestService.generateTimeSeriesData();
+
+        XYChart.Series<Double, Double> xyChartSeries = new XYChart.Series<>();
+        Double time = 0.0;
+        for (Double tsDataElement : timeSeriesData) {
+            xyChartSeries.getData().add(new XYChart.Data<>(time, tsDataElement));
+            time += 1.0;
+        }
+
+        this.timeSeriesLineChart.getData().add(xyChartSeries);
     }
 
 }
