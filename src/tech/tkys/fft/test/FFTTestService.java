@@ -2,11 +2,22 @@ package tech.tkys.fft.test;
 
 import tech.tkys.fft.calculation.FFTCalculator;
 
+import java.util.ArrayList;
+
 /**
  * FFTアルゴリズムのテストルーチン
  */
-public class FFTTester {
+public class FFTTestService {
     private static int N = 64;
+
+    public ArrayList<Double> generateTimeSeriesData() {
+        ArrayList<Double> tsData = new ArrayList<Double>();
+        for (int i = 0; i < N; i++) {
+            tsData.add(6 * Math.cos(6 * Math.PI * i / N) +  4 * Math.sin(18 * Math.PI * i / N));
+        }
+
+        return tsData;
+    }
 
     public static void executeFFTTest() {
         int i;

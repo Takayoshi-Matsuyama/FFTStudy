@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tech.tkys.fft.test.FFTTestService;
 
 import java.io.IOException;
 
@@ -12,6 +13,8 @@ import java.io.IOException;
  */
 public class AppBootStrapper {
     public void startApplication(Stage primaryStage) {
+        ServiceContainer.registerService("FFTTestService", new FFTTestService());
+
         this.showPrimaryStage(primaryStage);
     }
 

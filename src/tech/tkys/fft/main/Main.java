@@ -2,7 +2,7 @@ package tech.tkys.fft.main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import tech.tkys.fft.test.FFTTester;
+import tech.tkys.fft.test.FFTTestService;
 
 public class Main extends Application {
 
@@ -10,7 +10,7 @@ public class Main extends Application {
         launch(args);
 
         System.out.println("FFT Utility");
-        FFTTester.executeFFTTest();
+        FFTTestService.executeFFTTest();
     }
 
     @Override
