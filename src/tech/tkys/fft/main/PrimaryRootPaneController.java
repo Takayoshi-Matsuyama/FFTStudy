@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class PrimaryRootPaneController {
 
     ArrayList<Double> timeSeriesData = null;
+    ArrayList<Double> fftData = null;
 
     @FXML
     private LineChart<Double, Double> timeSeriesLineChart;
@@ -57,6 +58,18 @@ public class PrimaryRootPaneController {
         if (this.timeSeriesData == null) {
             return;
         }
+
+        this.fftData = fftTestService.executeFFT(this.timeSeriesData);
+
+        XYChart.Series<Double, Double> xyChartSeries = new XYChart.Series<>();
+        xyChartSeries.setName("FFT Data");
+        Double frequency = 0.0;
+        for (Double fftDataElement : this.fftData) {
+            xyChartSeries.getData().add(new XYChart.Data<>(frequency, fftDataElement));
+            frequency += 1.0;
+        }
+
+        this.frequencyLineChart.getData().add(xyChartSeries);
     }
 
 }

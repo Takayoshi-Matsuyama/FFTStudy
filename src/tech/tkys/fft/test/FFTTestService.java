@@ -19,6 +19,11 @@ public class FFTTestService {
         return tsData;
     }
 
+    public ArrayList<Double> executeFFT(ArrayList<Double> timeSeriesData) {
+        ArrayList<Double> result = new ArrayList<>();
+        return result;
+    }
+
     public static void executeFFTTest() {
         int i;
         double x1[] = new double[N];
