@@ -23,7 +23,7 @@
          <children>
             <Button fx:id="selectButton" layoutX="40.0" layoutY="29.0" mnemonicParsing="false" onAction="#onSelectButtionClicked" text="SELECT" />
             <Button layoutX="159.0" layoutY="29.0" mnemonicParsing="false" text="Button" />
-            <LineChart layoutX="26.0" layoutY="120.0" prefHeight="235.0" prefWidth="347.0">
+            <LineChart fx:id="timeSeriesLineChart" layoutX="26.0" layoutY="120.0" prefHeight="235.0" prefWidth="347.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
