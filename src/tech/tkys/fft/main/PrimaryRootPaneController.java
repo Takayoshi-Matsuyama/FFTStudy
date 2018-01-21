@@ -66,6 +66,7 @@ public class PrimaryRootPaneController {
         Double frequency = 0.0;
         for (Double fftDataElement : this.fftData) {
             xyChartSeries.getData().add(new XYChart.Data<>(frequency, fftDataElement));
+            // TODO: 周波数軸の値
             frequency += 1.0;
         }
 

@@ -21,6 +21,22 @@ public class FFTTestService {
 
     public ArrayList<Double> executeFFT(ArrayList<Double> timeSeriesData) {
         ArrayList<Double> result = new ArrayList<>();
+
+        ArrayList<Double> realPart = new ArrayList<>();
+        ArrayList<Double> imaginaryPart = new ArrayList<>();
+
+        for (double timeSeriesElement : timeSeriesData) {
+            realPart.add(timeSeriesElement);
+            imaginaryPart.add(0.0);
+        }
+
+        FFTCalculator fftCalculator = new FFTCalculator();
+        fftCalculator.fft(timeSeriesData.size(), realPart, imaginaryPart);
+
+        for (int i = 0; i < timeSeriesData.size(); i++) {
+            result.add(Math.sqrt(Math.pow(realPart.get(i), 2) + Math.pow(imaginaryPart.get(i), 2)));
+        }
+
         return result;
     }
 
