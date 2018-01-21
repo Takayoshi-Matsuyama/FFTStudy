@@ -15,7 +15,7 @@ public class PrimaryRootPaneController {
     private LineChart<Double, Double> timeSeriesLineChart;
 
     @FXML
-    public void onSelectButtionClicked(ActionEvent event) {
+    public void onGenerateTimeSeriesButtionClicked(ActionEvent event) {
         System.out.println("onSelectButtionClicked");
 
         FFTTestService fftTestService = null;
