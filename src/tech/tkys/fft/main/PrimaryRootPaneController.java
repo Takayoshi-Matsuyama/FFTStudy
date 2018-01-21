@@ -11,8 +11,13 @@ import java.util.ArrayList;
 
 public class PrimaryRootPaneController {
 
+    ArrayList<Double> timeSeriesData = null;
+
     @FXML
     private LineChart<Double, Double> timeSeriesLineChart;
+
+    @FXML
+    private LineChart<Double, Double> frequencyLineChart;
 
     @FXML
     public void onGenerateTimeSeriesButtionClicked(ActionEvent event) {
@@ -26,17 +31,32 @@ public class PrimaryRootPaneController {
             fftTestService = (FFTTestService)service;
         }
 
-        ArrayList<Double> timeSeriesData = fftTestService.generateTimeSeriesData();
+        this.timeSeriesData = fftTestService.generateTimeSeriesData();
 
         XYChart.Series<Double, Double> xyChartSeries = new XYChart.Series<>();
         xyChartSeries.setName("Time Series Data");
         Double time = 0.0;
-        for (Double tsDataElement : timeSeriesData) {
+        for (Double tsDataElement : this.timeSeriesData) {
             xyChartSeries.getData().add(new XYChart.Data<>(time, tsDataElement));
             time += 1.0;
         }
 
         this.timeSeriesLineChart.getData().add(xyChartSeries);
+    }
+
+    @FXML
+    public void onExecuteFFTButtonClicked(ActionEvent event) {
+        FFTTestService fftTestService = null;
+        Object service = ServiceContainer.getService("FFTTestService");
+        if ((service instanceof FFTTestService) == false) {
+            return;
+        } else {
+            fftTestService = (FFTTestService)service;
+        }
+
+        if (this.timeSeriesData == null) {
+            return;
+        }
     }
 
 }
