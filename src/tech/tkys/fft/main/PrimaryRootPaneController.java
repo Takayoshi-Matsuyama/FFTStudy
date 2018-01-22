@@ -40,8 +40,6 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
 
     @FXML
     public void onGenerateTimeSeriesButtionClicked(ActionEvent event) {
-        System.out.println("onSelectButtionClicked");
-
         FFTTestService fftTestService = null;
         Object service = ServiceContainer.getService("FFTTestService");
         if ((service instanceof FFTTestService) == false) {
@@ -50,7 +48,8 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
             fftTestService = (FFTTestService)service;
         }
 
-        this.timeSeriesData = fftTestService.generateTimeSeriesData();
+        String selectedFunction = (String)this.functionChoiceBox.getSelectionModel().getSelectedItem();
+        this.timeSeriesData = fftTestService.generateTimeSeriesData(selectedFunction);
 
         XYChart.Series<Double, Double> xyChartSeries = new XYChart.Series<>();
         xyChartSeries.setName("Time Series Data");
