@@ -12,8 +12,8 @@ public class FFTTestService {
 
     public ArrayList<Double> generateTimeSeriesData() {
         ArrayList<Double> tsData = new ArrayList<Double>();
-        for (int i = 0; i < N; i++) {
-            tsData.add(6 * Math.cos(6 * Math.PI * i / N) +  4 * Math.sin(18 * Math.PI * i / N));
+        for (int t = 0; t < N; t++) {
+            tsData.add(6 * Math.cos(6 * Math.PI * t / N) +  4 * Math.sin(18 * Math.PI * t / N));
         }
 
         return tsData;

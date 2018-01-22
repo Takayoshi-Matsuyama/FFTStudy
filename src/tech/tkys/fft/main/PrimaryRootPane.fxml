@@ -23,11 +23,11 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="497.0" prefWidth="799.0">
+      <AnchorPane prefHeight="565.0" prefWidth="799.0">
          <children>
-            <Button fx:id="generateTimeSeriesButton" layoutX="40.0" layoutY="29.0" mnemonicParsing="false" onAction="#onGenerateTimeSeriesButtionClicked" text="Generate Time Series" />
+            <Button fx:id="generateTimeSeriesButton" layoutX="30.0" layoutY="79.0" mnemonicParsing="false" onAction="#onGenerateTimeSeriesButtionClicked" prefHeight="27.0" prefWidth="164.0" text="Generate Time Series" />
             <Button fx:id="executeFFTButton" layoutX="30.0" layoutY="264.0" mnemonicParsing="false" onAction="#onExecuteFFTButtonClicked" text="Execute FFT" />
-            <LineChart fx:id="timeSeriesLineChart" animated="false" layoutX="206.0" layoutY="29.0" prefHeight="235.0" prefWidth="566.0">
+            <LineChart fx:id="timeSeriesLineChart" animated="false" layoutX="206.0" layoutY="63.0" prefHeight="235.0" prefWidth="566.0">
               <xAxis>
                 <NumberAxis label="Time [s]" side="BOTTOM" />
               </xAxis>
@@ -35,7 +35,7 @@
                 <NumberAxis label="Voltage [mV]" side="LEFT" />
               </yAxis>
             </LineChart>
-            <LineChart fx:id="frequencyLineChart" animated="false" layoutX="213.0" layoutY="264.0" prefHeight="245.0" prefWidth="552.0">
+            <LineChart fx:id="frequencyLineChart" animated="false" layoutX="213.0" layoutY="306.0" prefHeight="245.0" prefWidth="552.0">
               <xAxis>
                 <NumberAxis label="Frequency [Hz]" side="BOTTOM" />
               </xAxis>
@@ -43,6 +43,7 @@
                 <NumberAxis label="FFT" side="LEFT" />
               </yAxis>
             </LineChart>
+            <ChoiceBox fx:id="functionChoiceBox" layoutX="30.0" layoutY="21.0" prefHeight="27.0" prefWidth="732.0" />
          </children>
       </AnchorPane>
    </children>

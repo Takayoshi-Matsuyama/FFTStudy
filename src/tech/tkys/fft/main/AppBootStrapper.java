@@ -21,12 +21,17 @@ public class AppBootStrapper {
     private void showPrimaryStage(Stage primaryStage) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("PrimaryRootPane.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PrimaryRootPane.fxml"));
+            root = loader.load();
+            PrimaryRootPaneController controller = loader.getController();
+            if (controller != null) {
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("FFT");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

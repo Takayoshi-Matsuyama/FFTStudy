@@ -2,23 +2,41 @@ package tech.tkys.fft.main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ChoiceBox;
 import tech.tkys.fft.test.FFTTestService;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class PrimaryRootPaneController {
+public class PrimaryRootPaneController implements javafx.fxml.Initializable {
 
     ArrayList<Double> timeSeriesData = null;
     ArrayList<Double> fftData = null;
+
+    @FXML
+    private ChoiceBox functionChoiceBox;
 
     @FXML
     private LineChart<Double, Double> timeSeriesLineChart;
 
     @FXML
     private LineChart<Double, Double> frequencyLineChart;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.functionChoiceBox.getItems().addAll(
+                "sin(t)",
+                "sin(2t)",
+                "sin(3t)",
+                "6 * cos(6 * PI * t) +  4 * sin(18 * PI * t)"
+        );
+        this.functionChoiceBox.getSelectionModel().selectFirst();
+    }
 
     @FXML
     public void onGenerateTimeSeriesButtionClicked(ActionEvent event) {
