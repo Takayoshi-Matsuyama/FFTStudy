@@ -90,4 +90,12 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
         this.frequencyLineChart.getData().add(xyChartSeries);
     }
 
+    @FXML
+    public void onClearButtonClicked(ActionEvent event) {
+        this.timeSeriesData.clear();
+        this.fftData.clear();
+        this.timeSeriesLineChart.getData().clear();
+        this.frequencyLineChart.getData().clear();
+    }
+
 }
