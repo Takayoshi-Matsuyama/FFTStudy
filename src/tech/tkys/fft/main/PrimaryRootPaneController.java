@@ -30,6 +30,8 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.functionChoiceBox.getItems().addAll(
+                "sin(t/3)",
+                "sin(t/2)",
                 "sin(t)",
                 "sin(2t)",
                 "sin(3t)",

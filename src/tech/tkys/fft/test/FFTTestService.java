@@ -13,17 +13,25 @@ public class FFTTestService {
     public ArrayList<Double> generateTimeSeriesData(String function) {
         ArrayList<Double> tsData = new ArrayList<Double>();
 
-        if (function.equals("sin(t)")) {
+        if (function.equals("sin(t/3)")) {
             for (int t = 0; t < N; t++) {
-                tsData.add(Math.sin(t));
+                tsData.add(Math.sin(t/3.0));
+            }
+        } else if (function.equals("sin(t/2)")) {
+            for (int t = 0; t < N; t++) {
+                tsData.add(Math.sin(t/2.0));
+            }
+        } else if (function.equals("sin(t)")) {
+            for (int t = 0; t < N; t++) {
+                tsData.add(Math.sin((double)t));
             }
         } else if (function.equals("sin(2t)")) {
             for (int t = 0; t < N; t++) {
-                tsData.add(Math.sin(2 * t));
+                tsData.add(Math.sin(2.0 * t));
             }
         } else if (function.equals("sin(3t)")) {
             for (int t = 0; t < N; t++) {
-                tsData.add(Math.sin(3 * t));
+                tsData.add(Math.sin(3.0 * t));
             }
         } else if (function.equals("6 * cos(6 * PI * t) +  4 * sin(18 * PI * t)")) {
             for (int t = 0; t < N; t++) {
