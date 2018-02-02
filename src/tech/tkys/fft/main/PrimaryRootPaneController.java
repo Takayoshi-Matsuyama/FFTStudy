@@ -8,6 +8,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import tech.tkys.fft.test.FFTTestService;
 
 import java.net.URL;
@@ -98,6 +99,18 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
     }
 
     @FXML
+    public void onDumpTimeSeriesButtonClicked(ActionEvent event) {
+        if (this.timeSeriesData == null) {
+            return;
+        }
+
+        System.out.println("Time Series");
+        for (Double tsDataElement : this.timeSeriesData) {
+            System.out.println(tsDataElement);
+        }
+    }
+
+    @FXML
     public void onExecuteFFTButtonClicked(ActionEvent event) {
         FFTTestService fftTestService = null;
         Object service = ServiceContainer.getService("FFTTestService");
@@ -123,6 +136,18 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
         }
 
         this.frequencyLineChart.getData().add(xyChartSeries);
+    }
+
+    @FXML
+    public void onDumpFFTButtonClicked(ActionEvent event) {
+        if (this.fftData == null) {
+            return;
+        }
+
+        System.out.println("Frequency Data");
+        for (Double fftDataElement : this.fftData) {
+            System.out.println(fftDataElement);
+        }
     }
 
     @FXML
