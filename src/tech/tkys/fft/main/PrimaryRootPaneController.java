@@ -7,6 +7,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import tech.tkys.fft.test.FFTTestService;
 
 import java.net.URL;
@@ -19,6 +20,12 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
     ArrayList<Double> fftData = null;
 
     @FXML
+    private TextField samplingFrequencyTextField;
+
+    @FXML
+    private TextField samplingNumberTextField;
+
+    @FXML
     private ChoiceBox functionChoiceBox;
 
     @FXML
@@ -29,6 +36,8 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.samplingFrequencyTextField.setText("0");
+        this.samplingNumberTextField.setText("0");
         this.functionChoiceBox.getItems().addAll(
                 "sin(t/3)",
                 "sin(t/2)",
