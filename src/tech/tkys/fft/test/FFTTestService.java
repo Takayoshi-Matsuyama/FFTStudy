@@ -10,10 +10,19 @@ import java.util.ArrayList;
 public class FFTTestService {
     private static int N = 64;
 
-    public ArrayList<Double> generateTimeSeriesData(String function) {
+    public ArrayList<Double> generateTimeSeriesData(
+            double samplingFrequency,
+            int samplingNumber,
+            String function) {
+        double dt = 1.0 / samplingFrequency;
         ArrayList<Double> tsData = new ArrayList<Double>();
 
-        if (function.equals("sin(t/3)")) {
+        if (function.equals("0.1*sin(2*PI*100t)+0.2*sin(2*PI*200t)+0.3*sin(2*PI*300t)")) {
+            for (int i = 0; i < samplingNumber; i++) {
+                double t = dt * i;
+                tsData.add(0.1*Math.sin(2.0*Math.PI*100.0*t)+0.2*Math.sin(2.0*Math.PI*200.0*t)+0.3*Math.sin(2.0*Math.PI*300.0*t));
+            }
+        } else if (function.equals("sin(t/3)")) {
             for (int t = 0; t < N; t++) {
                 tsData.add(Math.sin(t/3.0));
             }
