@@ -2,26 +2,21 @@ package tech.tkys.fft.main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import tech.tkys.fft.test.FFTTestService;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static java.lang.Double.parseDouble;
-
 public class PrimaryRootPaneController implements javafx.fxml.Initializable {
 
     double samplingFrequency = 1024.0;
     int samplingNumber = 1024;
-    ArrayList<Double> timeSeriesData = null;
+    TimeSeriesDataSet timeSeries;
     ArrayList<Double> fftData = null;
 
     @FXML
@@ -44,14 +39,7 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
         this.samplingFrequencyTextField.setText("1024");
         this.samplingNumberTextField.setText("1024");
         this.functionChoiceBox.getItems().addAll(
-                "0.1*sin(2*PI*100t)+0.2*sin(2*PI*200t)+0.3*sin(2*PI*300t)",
-                "sin(t/3)",
-                "sin(t/2)",
-                "sin(t)",
-                "sin(2t)",
-                "sin(3t)",
-                "6 * cos(6 * PI * t) +  4 * sin(18 * PI * t)"
-        );
+                "0.1*sin(2*PI*100t)+0.2*sin(2*PI*200t)+0.3*sin(2*PI*300t)");
         this.functionChoiceBox.getSelectionModel().selectFirst();
     }
 
@@ -79,18 +67,19 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
         }
 
         String selectedFunction = (String)this.functionChoiceBox.getSelectionModel().getSelectedItem();
-        this.timeSeriesData = fftTestService.generateTimeSeriesData(this.samplingFrequency, this.samplingNumber, selectedFunction);
+        this.timeSeries = fftTestService.generateTimeSeries(
+                this.samplingFrequency,
+                this.samplingNumber,
+                selectedFunction);
 
         XYChart.Series<Double, Double> xyChartSeries = new XYChart.Series<>();
-        xyChartSeries.setName("Time Series Data");
-        Double dt = 1.0 / this.samplingFrequency;
-        Double time = 0.0;
-        int pointCount = 0;
-        for (Double tsDataElement : this.timeSeriesData) {
-            xyChartSeries.getData().add(new XYChart.Data<>(time, tsDataElement));
-            time += dt;
-            pointCount++;
-            if (pointCount > 99) {
+        xyChartSeries.setName("x(t)");
+        for (int i = 0; i < this.timeSeries.getSize(); i++) {
+            xyChartSeries.getData().add(new XYChart.Data<>(
+                    this.timeSeries.getTimeStamps().get(i),
+                    this.timeSeries.getTimeSeries().get(i)));
+
+            if (i > 98) {
                 break;
             }
         }
@@ -100,13 +89,16 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
 
     @FXML
     public void onDumpTimeSeriesButtonClicked(ActionEvent event) {
-        if (this.timeSeriesData == null) {
+        if (this.timeSeries == null) {
             return;
         }
 
-        System.out.println("Time Series");
-        for (Double tsDataElement : this.timeSeriesData) {
-            System.out.println(tsDataElement);
+        System.out.println("t\tx(t)");
+        for (int i = 0; i < this.timeSeries.getSize(); i++) {
+            System.out.printf(
+                    "%f\t%f%n",
+                    this.timeSeries.getTimeStamps().get(i),
+                    this.timeSeries.getTimeSeries().get(i));
         }
     }
 
@@ -120,14 +112,14 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
             fftTestService = (FFTTestService)service;
         }
 
-        if (this.timeSeriesData == null) {
+        if (this.timeSeries == null) {
             return;
         }
 
-        this.fftData = fftTestService.executeFFT(this.timeSeriesData);
+        this.fftData = fftTestService.executeFFT(this.timeSeries.getTimeSeries());
 
         XYChart.Series<Double, Double> xyChartSeries = new XYChart.Series<>();
-        xyChartSeries.setName("FFT Data");
+        xyChartSeries.setName("X(f)");
         Double df = this.samplingFrequency / this.samplingNumber;
         Double frequency = 0.0;
         for (Double fftDataElement : this.fftData) {
@@ -144,7 +136,7 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
             return;
         }
 
-        System.out.println("Frequency Data");
+        System.out.println("f\tX(f)");
         for (Double fftDataElement : this.fftData) {
             System.out.println(fftDataElement);
         }
@@ -152,8 +144,8 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
 
     @FXML
     public void onClearButtonClicked(ActionEvent event) {
-        if (this.timeSeriesData != null) {
-            this.timeSeriesData.clear();
+        if (this.timeSeries != null) {
+            this.timeSeries.clear();
         }
 
         if (this.fftData != null) {

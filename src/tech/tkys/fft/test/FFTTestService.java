@@ -1,6 +1,7 @@
 package tech.tkys.fft.test;
 
 import tech.tkys.fft.calculation.FFTCalculator;
+import tech.tkys.fft.main.TimeSeriesDataSet;
 
 import java.util.ArrayList;
 
@@ -10,45 +11,24 @@ import java.util.ArrayList;
 public class FFTTestService {
     private static int N = 64;
 
-    public ArrayList<Double> generateTimeSeriesData(
+    public TimeSeriesDataSet generateTimeSeries(
             double samplingFrequency,
             int samplingNumber,
             String function) {
+        ArrayList<Double> timestamps = new ArrayList<>();
+        ArrayList<Double> timeSeries = new ArrayList<>();
+
         double dt = 1.0 / samplingFrequency;
-        ArrayList<Double> tsData = new ArrayList<Double>();
 
         if (function.equals("0.1*sin(2*PI*100t)+0.2*sin(2*PI*200t)+0.3*sin(2*PI*300t)")) {
             for (int i = 0; i < samplingNumber; i++) {
                 double t = dt * i;
-                tsData.add(0.1*Math.sin(2.0*Math.PI*100.0*t)+0.2*Math.sin(2.0*Math.PI*200.0*t)+0.3*Math.sin(2.0*Math.PI*300.0*t));
-            }
-        } else if (function.equals("sin(t/3)")) {
-            for (int t = 0; t < N; t++) {
-                tsData.add(Math.sin(t/3.0));
-            }
-        } else if (function.equals("sin(t/2)")) {
-            for (int t = 0; t < N; t++) {
-                tsData.add(Math.sin(t/2.0));
-            }
-        } else if (function.equals("sin(t)")) {
-            for (int t = 0; t < N; t++) {
-                tsData.add(Math.sin((double)t));
-            }
-        } else if (function.equals("sin(2t)")) {
-            for (int t = 0; t < N; t++) {
-                tsData.add(Math.sin(2.0 * t));
-            }
-        } else if (function.equals("sin(3t)")) {
-            for (int t = 0; t < N; t++) {
-                tsData.add(Math.sin(3.0 * t));
-            }
-        } else if (function.equals("6 * cos(6 * PI * t) +  4 * sin(18 * PI * t)")) {
-            for (int t = 0; t < N; t++) {
-                tsData.add(6 * Math.cos(6 * Math.PI * t / N) +  4 * Math.sin(18 * Math.PI * t / N));
+                timestamps.add(t);
+                timeSeries.add(0.1*Math.sin(2.0*Math.PI*100.0*t)+0.2*Math.sin(2.0*Math.PI*200.0*t)+0.3*Math.sin(2.0*Math.PI*300.0*t));
             }
         }
 
-        return tsData;
+        return new TimeSeriesDataSet(timestamps, timeSeries);
     }
 
     public ArrayList<Double> executeFFT(ArrayList<Double> timeSeriesData) {
