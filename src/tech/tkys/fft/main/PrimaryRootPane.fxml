@@ -33,7 +33,7 @@
                 <NumberAxis label="Time [s]" side="BOTTOM" />
               </xAxis>
               <yAxis>
-                <NumberAxis label="Voltage [mV]" side="LEFT" />
+                <NumberAxis label="x(t)" side="LEFT" />
               </yAxis>
             </LineChart>
             <LineChart fx:id="frequencyLineChart" animated="false" layoutX="213.0" layoutY="338.0" prefHeight="245.0" prefWidth="552.0">
@@ -41,7 +41,7 @@
                 <NumberAxis label="Frequency [Hz]" side="BOTTOM" />
               </xAxis>
               <yAxis>
-                <NumberAxis label="FFT" side="LEFT" />
+                <NumberAxis label="X(f)" side="LEFT" />
               </yAxis>
             </LineChart>
             <ChoiceBox fx:id="functionChoiceBox" layoutX="14.0" layoutY="57.0" prefHeight="27.0" prefWidth="730.0" />
