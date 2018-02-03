@@ -17,7 +17,7 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
     double samplingFrequency = 1024.0;
     int samplingNumber = 1024;
     TimeSeriesDataSet timeSeries;
-    ArrayList<Double> fftData = null;
+    FFTDataSet fftData;
 
     @FXML
     private TextField samplingFrequencyTextField;
@@ -116,15 +116,18 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
             return;
         }
 
-        this.fftData = fftTestService.executeFFT(this.timeSeries.getTimeSeries());
+        this.fftData = fftTestService.executeFFT(
+                this.samplingFrequency,
+                this.samplingNumber,
+                this.timeSeries.getTimeSeries());
 
         XYChart.Series<Double, Double> xyChartSeries = new XYChart.Series<>();
         xyChartSeries.setName("X(f)");
-        Double df = this.samplingFrequency / this.samplingNumber;
-        Double frequency = 0.0;
-        for (Double fftDataElement : this.fftData) {
-            xyChartSeries.getData().add(new XYChart.Data<>(frequency, fftDataElement));
-            frequency += df;
+
+        for (int i = 0; i < fftData.getSize(); i++) {
+            xyChartSeries.getData().add(new XYChart.Data<>(
+                    this.fftData.getFrequencies().get(i),
+                    this.fftData.getFourierCoefficients().get(i)));
         }
 
         this.frequencyLineChart.getData().add(xyChartSeries);
@@ -137,8 +140,11 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
         }
 
         System.out.println("f\tX(f)");
-        for (Double fftDataElement : this.fftData) {
-            System.out.println(fftDataElement);
+        for (int i = 0; i < this.fftData.getSize(); i++) {
+            System.out.printf(
+                    "%f\t%f%n",
+                    this.fftData.getFrequencies().get(i),
+                    this.fftData.getFourierCoefficients().get(i));
         }
     }
 

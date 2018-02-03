@@ -28,7 +28,7 @@ public class TimeSeriesDataSet {
     }
 
     public ArrayList<Double> getTimeSeries() {
-        return timeSeries;
+        return this.timeSeries;
     }
 
     public void clear() {
