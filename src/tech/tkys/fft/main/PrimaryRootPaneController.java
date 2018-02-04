@@ -116,7 +116,7 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
             return;
         }
 
-        this.fftData = fftTestService.executeFFT(
+        this.fftData = fftTestService.executeFFT2(
                 this.samplingFrequency,
                 this.samplingNumber,
                 this.timeSeries.getTimeSeries());

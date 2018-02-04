@@ -3,20 +3,20 @@ package tech.tkys.fft.main;
 public class FFT {
     int n;
     int[] bitrev;
-    double[] sintbl;
+    Double[] sintbl;
 
     public FFT(int n) {
         this.n = n;
-        sintbl = new double[n + n / 4];
+        sintbl = new Double[n + n / 4];
         bitrev = new int[n];
 
         // 三角関数表を作る
-        double t = Math.sin(Math.PI / n);
-        double dc = 2 * t * t;
-        double ds = Math.sqrt(dc * (2 - dc));
+        Double t = Math.sin(Math.PI / n);
+        Double dc = 2 * t * t;
+        Double ds = Math.sqrt(dc * (2 - dc));
         t = 2 * dc;
-        double c = sintbl[n / 4] = 1;
-        double s = sintbl[0] = 0;
+        Double c = sintbl[n / 4] = 1.0;
+        Double s = sintbl[0] = 0.0;
         for (int i = 1; i < n /8; i++) {
             c -=dc;
             dc += t * c;
@@ -54,11 +54,11 @@ public class FFT {
         }
     }
 
-    public void fft(double[] x, double[] y) {
+    public void fft(Double[] x, Double[] y) {
         this.fftsub(x, y, 1);
     }
 
-    public void ifft(double[] x, double[] y) {
+    public void ifft(Double[] x, Double[] y) {
         fftsub(x, y, -1);
         for (int i = 0; i < n; i++) {
             x[i] /= n;
@@ -66,11 +66,11 @@ public class FFT {
         }
     }
 
-    private void fftsub(double[] x, double[] y, int sign) {
+    private void fftsub(Double[] x, Double[] y, int sign) {
         for (int i = 0; i < n; i++) {
             int j = bitrev[i];
             if (i < j) {
-                double t = x[i];
+                Double t = x[i];
                 x[i] = x[j];
                 x[j] = t;
 
@@ -84,12 +84,12 @@ public class FFT {
             int h = 0;
             int d = n / (k * 2);
             for (int j = 0; j < k; j++) {
-                double c = sintbl[h + n / 4];
-                double s = sign * sintbl[h];
+                Double c = sintbl[h + n / 4];
+                Double s = sign * sintbl[h];
                 for (int i = j; i < n; i += k *2) {
                     int ik = i + k;
-                    double dx = s * y[ik] + c * x[ik];
-                    double dy = c * y[ik] - s * x[ik];
+                    Double dx = s * y[ik] + c * x[ik];
+                    Double dy = c * y[ik] - s * x[ik];
                     x[ik] = x[i] - dx;
                     x[i] += dx;
                     y[ik] = y[i] - dy;

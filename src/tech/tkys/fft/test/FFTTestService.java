@@ -61,6 +61,35 @@ public class FFTTestService {
         return new FFTDataSet(frequencies, fourierCoefficients);
     }
 
+    public FFTDataSet executeFFT2(
+            double samplingFrequency,
+            int samplingNumber,
+            ArrayList<Double> timeSeries) {
+        ArrayList<Double> frequencies = new ArrayList<>();
+        ArrayList<Double> fourierCoefficients = new ArrayList<>();
+
+        int n = timeSeries.size();
+
+        Double[] x = new Double[n];
+        Double[] y = new Double[n];
+        for (int i = 0; i < n; i++) {
+            x[i] = timeSeries.get(i);
+            y[i] = 0.0;
+        }
+
+        FFT fftN = new FFT(n);
+        fftN.fft(x, y);
+
+        Double df = samplingFrequency / samplingNumber;
+
+        for (int i = 0; i < timeSeries.size(); i++) {
+            frequencies.add(df * i);
+            fourierCoefficients.add(Math.sqrt(Math.pow(x[i], 2) + Math.pow(y[i], 2)));
+        }
+
+        return new FFTDataSet(frequencies, fourierCoefficients);
+    }
+
     public static void executeFFTTest() {
         int i;
         ArrayList<Double> x1 = new ArrayList<Double>();
@@ -107,17 +136,17 @@ public class FFTTestService {
 
     public static void executeFFTTest2() {
         final int N = 64;
-        double x1[] = new double[N];
-        double y1[] = new double[N];
-        double x2[] = new double[N];
-        double y2[] = new double[N];
-        double x3[] = new double[N];
-        double y3[] = new double[N];
+        Double x1[] = new Double[N];
+        Double y1[] = new Double[N];
+        Double x2[] = new Double[N];
+        Double y2[] = new Double[N];
+        Double x3[] = new Double[N];
+        Double y3[] = new Double[N];
 
         for (int i = 0; i < N; i++) {
             x1[i] = x2[i] = 6 * Math.cos(6 * Math.PI * i / N)
                           + 4 * Math.sin(18 * Math.PI * i / N);
-            y1[i] = y2[i] = 0;
+            y1[i] = y2[i] = 0.0;
         }
 
         FFT fftN = new FFT(N);
@@ -132,12 +161,12 @@ public class FFTTestService {
         System.out.println("元データ\tフーリエ変換\t逆変換");
         for (int i = 0; i < N; i++) {
             System.out.println(i + " (" +
-                    (float)x1[i] + "," +
-                    (float)y1[i] + ") (" +
-                    (float)x2[i] + ", " +
-                    (float)y2[i] + ") (" +
-                    (float)x3[i] + ", " +
-                    (float)y3[i] + ")");
+                    x1[i] + "," +
+                    y1[i] + ") (" +
+                    x2[i] + ", " +
+                    y2[i] + ") (" +
+                    x3[i] + ", " +
+                    y3[i] + ")");
         }
     }
 }
