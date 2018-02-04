@@ -7,6 +7,9 @@ import tech.tkys.fft.test.FFTTestService;
 public class Main extends Application {
 
     public static void main(String[] args) {
+
+        FFTTestService.executeFFTTest2();
+
         launch(args);
     }
 

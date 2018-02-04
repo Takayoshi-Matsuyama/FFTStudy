@@ -1,6 +1,7 @@
 package tech.tkys.fft.test;
 
 import tech.tkys.fft.calculation.FFTCalculator;
+import tech.tkys.fft.main.FFT;
 import tech.tkys.fft.main.FFTDataSet;
 import tech.tkys.fft.main.TimeSeriesDataSet;
 
@@ -101,6 +102,42 @@ public class FFTTestService {
         for (i = 0; i < N; i++) {
             System.out.format("%4d | %6.3f %6.3f | %6.3f %6.3f | %6.3f %6.3f%n",
                     i, x1.get(i), y1.get(i), x2.get(i), y2.get(i), x3.get(i), y3.get(i));
+        }
+    }
+
+    public static void executeFFTTest2() {
+        final int N = 64;
+        double x1[] = new double[N];
+        double y1[] = new double[N];
+        double x2[] = new double[N];
+        double y2[] = new double[N];
+        double x3[] = new double[N];
+        double y3[] = new double[N];
+
+        for (int i = 0; i < N; i++) {
+            x1[i] = x2[i] = 6 * Math.cos(6 * Math.PI * i / N)
+                          + 4 * Math.sin(18 * Math.PI * i / N);
+            y1[i] = y2[i] = 0;
+        }
+
+        FFT fftN = new FFT(N);
+        fftN.fft(x2, y2);
+        for (int i = 0; i < N; i++) {
+            x3[i] = x2[i];
+            y3[i] = y2[i];
+        }
+
+        fftN.ifft(x3, y3);
+
+        System.out.println("元データ\tフーリエ変換\t逆変換");
+        for (int i = 0; i < N; i++) {
+            System.out.println(i + " (" +
+                    (float)x1[i] + "," +
+                    (float)y1[i] + ") (" +
+                    (float)x2[i] + ", " +
+                    (float)y2[i] + ") (" +
+                    (float)x3[i] + ", " +
+                    (float)y3[i] + ")");
         }
     }
 }
