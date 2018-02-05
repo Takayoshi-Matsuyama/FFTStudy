@@ -2,13 +2,13 @@ package tech.tkys.fft.main;
 
 public class FFT {
     int n;
-    int[] bitrev;
+    int[] bitRev;
     Double[] sintbl;
 
     public FFT(int n) {
         this.n = n;
         sintbl = new Double[n + n / 4];
-        bitrev = new int[n];
+        bitRev = new int[n];
 
         // 三角関数表を作る
         Double t = Math.sin(Math.PI / n);
@@ -39,19 +39,33 @@ public class FFT {
         }
 
         // ビット反転表を作る
-        int i = 0;
-        int j = 0;
-        bitrev[0] = 0;
-        while (++i < n) {
-            int k = n / 2;
-            while (k <= j) {
-                j -= k;
-                k /= 2;
+        this.bitRev = makeBitReversedArray(n);
+    }
+
+    /**
+     * Executes Bit-reversal permutation
+     * @param n
+     * @return The Bit-reversed array
+     */
+    private static int[] makeBitReversedArray(int n) {
+        int[] _bitRev = new int[n];
+        _bitRev[0] = 0;
+
+        int index = 0;
+        int p = 0;      // permutated index
+
+        while (++index < n) {
+            int half = n / 2;
+            while (half <= p) {
+                p -= half;
+                half /= 2;
             }
 
-            j += k;
-            bitrev[i] = j;
+            p += half;
+            _bitRev[index] = p;
         }
+
+        return _bitRev;
     }
 
     public void fft(Double[] x, Double[] y) {
@@ -68,7 +82,7 @@ public class FFT {
 
     private void fftsub(Double[] x, Double[] y, int sign) {
         for (int i = 0; i < n; i++) {
-            int j = bitrev[i];
+            int j = bitRev[i];
             if (i < j) {
                 Double t = x[i];
                 x[i] = x[j];
