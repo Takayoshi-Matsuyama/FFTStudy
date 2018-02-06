@@ -1,113 +1,122 @@
 package tech.tkys.fft.main;
 
 public class FFT {
-    int n;
-    int[] bitRev;
-    Double[] sintbl;
+    int sampleNumber;
+    int[] bitRevArray;
+    Double[] sinArray;
 
-    public FFT(int n) {
-        this.n = n;
-        sintbl = new Double[n + n / 4];
-        bitRev = new int[n];
+    public FFT(int sampleNumber) {
+        this.sampleNumber = sampleNumber;
+        this.bitRevArray = makeBitReversedArray(sampleNumber);
+        this.sinArray = makeSinArray(sampleNumber);
+    }
 
-        // 三角関数表を作る
-        Double t = Math.sin(Math.PI / n);
-        Double dc = 2 * t * t;
-        Double ds = Math.sqrt(dc * (2 - dc));
-        t = 2 * dc;
-        Double c = sintbl[n / 4] = 1.0;
-        Double s = sintbl[0] = 0.0;
-        for (int i = 1; i < n /8; i++) {
-            c -=dc;
-            dc += t * c;
-            s += ds;
-            ds -= t * s;
-            sintbl[i] = s;
-            sintbl[n / 4 - i] = c;
+    public void fft(Double[] real, Double[] imaginary) {
+        this.fftsub(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, 1);
+    }
+
+    public void ifft(Double[] real, Double[] imaginary) {
+        fftsub(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, -1);
+        for (int i = 0; i < this.sampleNumber; i++) {
+            real[i] /= this.sampleNumber;
+            imaginary[i] /= this.sampleNumber;
         }
-
-        if (n / 8 != 0) {
-            sintbl[n / 8] = Math.sqrt(0.5);
-        }
-
-        for (int i = 0; i < n / 4; i++) {
-            sintbl[n / 2 - i] = sintbl[i];
-        }
-
-        for (int i = 0; i < n /2 + n / 4; i++) {
-            sintbl[i + n / 2] = - sintbl[i];
-        }
-
-        // ビット反転表を作る
-        this.bitRev = makeBitReversedArray(n);
     }
 
     /**
      * Executes Bit-reversal permutation
-     * @param n
-     * @return The Bit-reversed array
+     * @param sampleNumber number of sample
+     * @return             Bit-reversed array
      */
-    private static int[] makeBitReversedArray(int n) {
-        int[] _bitRev = new int[n];
-        _bitRev[0] = 0;
+    private static int[] makeBitReversedArray(int sampleNumber) {
+        int[] bitRevArray = new int[sampleNumber];
+        bitRevArray[0] = 0;
 
         int index = 0;
         int p = 0;      // permutated index
 
-        while (++index < n) {
-            int half = n / 2;
+        while (++index < sampleNumber) {
+            int half = sampleNumber / 2;
             while (half <= p) {
                 p -= half;
                 half /= 2;
             }
 
             p += half;
-            _bitRev[index] = p;
+            bitRevArray[index] = p;
         }
 
-        return _bitRev;
+        return bitRevArray;
     }
 
-    public void fft(Double[] x, Double[] y) {
-        this.fftsub(x, y, 1);
-    }
+    private static Double[] makeSinArray(int sampleNumber) {
+        Double[] sinArray = new Double[sampleNumber + sampleNumber / 4];
 
-    public void ifft(Double[] x, Double[] y) {
-        fftsub(x, y, -1);
-        for (int i = 0; i < n; i++) {
-            x[i] /= n;
-            y[i] /= n;
+        Double t = Math.sin(Math.PI / sampleNumber);    // 回転子
+        Double dc = 2 * t * t;
+        Double ds = Math.sqrt(dc * (2 - dc));
+        t = 2 * dc;
+        Double c = sinArray[sampleNumber / 4] = 1.0;
+        Double s = sinArray[0] = 0.0;
+        for (int i = 1; i < sampleNumber / 8; i++) {
+            c -=dc;
+            dc += t * c;
+            s += ds;
+            ds -= t * s;
+            sinArray[i] = s;
+            sinArray[sampleNumber / 4 - i] = c;
         }
+
+        if (sampleNumber / 8 != 0) {
+            sinArray[sampleNumber / 8] = Math.sqrt(0.5);
+        }
+
+        for (int i = 0; i < sampleNumber / 4; i++) {
+            sinArray[sampleNumber / 2 - i] = sinArray[i];
+        }
+
+        for (int i = 0; i < sampleNumber /2 + sampleNumber / 4; i++) {
+            sinArray[i + sampleNumber / 2] = - sinArray[i];
+        }
+
+        return sinArray;
     }
 
-    private void fftsub(Double[] x, Double[] y, int sign) {
-        for (int i = 0; i < n; i++) {
-            int j = bitRev[i];
+    private static void fftsub(
+            int sampleNumber,
+            int[] bitRevArray,
+            Double[] sinArray,
+            Double[] real,
+            Double[] imaginary,
+            int sign) {
+        // ビット反転順に並べ替え
+        for (int i = 0; i < sampleNumber; i++) {
+            int j = bitRevArray[i];
             if (i < j) {
-                Double t = x[i];
-                x[i] = x[j];
-                x[j] = t;
+                Double t = real[i];
+                real[i] = real[j];
+                real[j] = t;
 
-                t = y[i];
-                y[i] = y[j];
-                y[j] = t;
+                t = imaginary[i];
+                imaginary[i] = imaginary[j];
+                imaginary[j] = t;
             }
         }
 
-        for (int k = 1; k < n; k *= 2) {
+        for (int k = 1; k < sampleNumber; k *= 2) {
             int h = 0;
-            int d = n / (k * 2);
+            int d = sampleNumber / (k * 2);
             for (int j = 0; j < k; j++) {
-                Double c = sintbl[h + n / 4];
-                Double s = sign * sintbl[h];
-                for (int i = j; i < n; i += k *2) {
+                Double c = sinArray[h + sampleNumber / 4];
+                Double s = sign * sinArray[h];
+                for (int i = j; i < sampleNumber; i += k *2) {
                     int ik = i + k;
-                    Double dx = s * y[ik] + c * x[ik];
-                    Double dy = c * y[ik] - s * x[ik];
-                    x[ik] = x[i] - dx;
-                    x[i] += dx;
-                    y[ik] = y[i] - dy;
-                    y[i] += dy;
+                    Double dx = s * imaginary[ik] + c * real[ik];
+                    Double dy = c * imaginary[ik] - s * real[ik];
+                    real[ik] = real[i] - dx;
+                    real[i] += dx;
+                    imaginary[ik] = imaginary[i] - dy;
+                    imaginary[i] += dy;
                 }
 
                 h += d;
