@@ -62,16 +62,16 @@ public class FFT {
         Double ds = Math.sqrt(dc * (2 - dc));   // sin?
         t = 2 * dc;
 
-        Double c = sinArray[sampleNumber / 4] = 1.0;    // cos?
-        Double s = sinArray[0] = 0.0;                   // sin?
+        Double cosValue = sinArray[sampleNumber / 4] = 1.0;
+        Double sinValue = sinArray[0] = 0.0;
 
         for (int i = 1; i < sampleNumber / 8; i++) {
-            c -= dc;
-            dc += t * c;
-            s += ds;
-            ds -= t * s;
-            sinArray[i] = s;
-            sinArray[sampleNumber / 4 - i] = c;
+            cosValue -= dc;
+            dc += t * cosValue;
+            sinValue += ds;
+            ds -= t * sinValue;
+            sinArray[i] = sinValue;
+            sinArray[sampleNumber / 4 - i] = cosValue;
         }
 
         //
@@ -112,7 +112,7 @@ public class FFT {
                 imaginary[j] = temp;
             }
         }
-        
+
         for (int k = 1; k < sampleNumber; k *= 2) {     // k : 2のべき乗(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, ...)
             int sinIndex = 0;
             int d = sampleNumber / (k * 2);
