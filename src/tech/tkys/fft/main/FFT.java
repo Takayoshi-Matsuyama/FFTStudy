@@ -143,7 +143,8 @@ public class FFT {
             int d = sampleNumber / (k * 2);
 
             for (int j = 0; j < k; j++) {
-                Double cosValue = sinArray[sinIndex + sampleNumber / 4];
+                int cosIndex = sinIndex + sampleNumber / 4;
+                Double cosValue = sinArray[cosIndex];
                 Double sinValue = sign * sinArray[sinIndex];
 
                 for (int i = j; i < sampleNumber; i += k * 2) {
