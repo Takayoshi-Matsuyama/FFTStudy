@@ -1,20 +1,45 @@
 package tech.tkys.fft.main;
 
 public class FFT {
+    /**
+     * Number of sample data for FFT. This is equal to number of complex sine wave in FFT.
+     */
     int sampleNumber;
+
+    /**
+     * Result of Bit-reversal permutation.
+     */
     int[] bitRevArray;
+
+    /**
+     * Values of complex sine wave for FFT calculation.
+     */
     Double[] sinArray;
 
+    /**
+     * Constructs an instance of FFT object.
+     * @param sampleNumber  Number of sample data for FFT. This is equal to number of complex sine wave in FFT.
+     */
     public FFT(int sampleNumber) {
         this.sampleNumber = sampleNumber;
         this.bitRevArray = makeBitReversedArray(sampleNumber);
         this.sinArray = makeSinArray(sampleNumber);
     }
 
+    /**
+     * Excutes FFT (Fast Fourier Transform) calculation.
+     * @param real       Array of real part of complex sine waves.
+     * @param imaginary  Array of imaginary part of complex sine waves.
+     */
     public void fft(Double[] real, Double[] imaginary) {
         this.fftsub(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, 1);
     }
 
+    /**
+     * Executes IFFT (Inverse Fast Fourier Transform) calculation.
+     * @param real       Array of real part of complex sine waves.
+     * @param imaginary  Array of imaginary part of complex sine waves.
+     */
     public void ifft(Double[] real, Double[] imaginary) {
         fftsub(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, -1);
         for (int i = 0; i < this.sampleNumber; i++) {
