@@ -112,7 +112,7 @@ public class FFT {
             sinArray[sampleNumber / 2 - i] = sinArray[i];
         }
 
-        // π ~ 2.5π の範囲のsin値：0 ~ π/2 のsin値を、符号を反転させてコピーする。
+        // π ~ 2π の範囲のsin値：0 ~ π/2 のsin値を、符号を反転させてコピーする。
         // π/2余分に用意する：sin(θ+π/2)=cos(θ)であり、FFTの計算でsinArrayからcosの値を取り出しやすくするため。
         for (int i = 0; i < sampleNumber /2 + sampleNumber / 4; i++) {
             sinArray[i + sampleNumber / 2] = - sinArray[i];
