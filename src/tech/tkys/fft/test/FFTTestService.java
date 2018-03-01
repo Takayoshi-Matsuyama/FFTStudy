@@ -1,7 +1,7 @@
 package tech.tkys.fft.test;
 
 import tech.tkys.fft.calculation.FFTCalculator;
-import tech.tkys.fft.main.FFT;
+import tech.tkys.fft.main.FFTLogic;
 import tech.tkys.fft.main.FFTDataSet;
 import tech.tkys.fft.main.TimeSeriesDataSet;
 
@@ -77,8 +77,8 @@ public class FFTTestService {
             y[i] = 0.0;
         }
 
-        FFT fftN = new FFT(n);
-        fftN.fft(x, y);
+        FFTLogic fftN = new FFTLogic(n);
+        fftN.executeFFT(x, y);
 
         Double df = samplingFrequency / samplingNumber;
 
@@ -149,14 +149,14 @@ public class FFTTestService {
             y1[i] = y2[i] = 0.0;
         }
 
-        FFT fftN = new FFT(N);
-        fftN.fft(x2, y2);
+        FFTLogic fftN = new FFTLogic(N);
+        fftN.executeFFT(x2, y2);
         for (int i = 0; i < N; i++) {
             x3[i] = x2[i];
             y3[i] = y2[i];
         }
 
-        fftN.ifft(x3, y3);
+        fftN.executeInverseFFT(x3, y3);
 
         System.out.println("元データ\tフーリエ変換\t逆変換");
         for (int i = 0; i < N; i++) {

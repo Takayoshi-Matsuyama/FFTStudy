@@ -31,7 +31,7 @@ public class AppBootStrapper {
             e.printStackTrace();
         }
 
-        primaryStage.setTitle("FFT");
+        primaryStage.setTitle("FFTLogic");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

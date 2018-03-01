@@ -4,7 +4,7 @@ package tech.tkys.fft.calculation;
 import java.util.ArrayList;
 
 /**
- * FFT (高速Fourier変換) Cooley-Tukeyの方法
+ * FFTLogic (高速Fourier変換) Cooley-Tukeyの方法
  */
 public class FFTCalculator {
     /**

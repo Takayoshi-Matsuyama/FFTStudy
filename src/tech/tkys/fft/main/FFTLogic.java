@@ -1,6 +1,9 @@
 package tech.tkys.fft.main;
 
-public class FFT {
+/**
+ * Logic class for FFT.
+ */
+public class FFTLogic {
     /**
      * Number of sample data for FFT. This is equal to number of complex sine wave in FFT.
      */
@@ -12,15 +15,15 @@ public class FFT {
     int[] bitRevArray;
 
     /**
-     * Values of complex sine wave for FFT calculation.
+     * Values of complex sine wave for FFTLogic calculation.
      */
     Double[] sinArray;
 
     /**
-     * Constructs an instance of FFT object.
+     * Constructs an instance of FFTLogic object.
      * @param sampleNumber  Number of sample data for FFT. This is equal to number of complex sine wave in FFT.
      */
-    public FFT(int sampleNumber) {
+    public FFTLogic(int sampleNumber) {
         this.sampleNumber = sampleNumber;
         this.bitRevArray = makeBitReversedArray(sampleNumber);
         this.sinArray = makeSinArray(sampleNumber);
@@ -31,17 +34,17 @@ public class FFT {
      * @param real       Array of real part of complex sine waves.
      * @param imaginary  Array of imaginary part of complex sine waves.
      */
-    public void fft(Double[] real, Double[] imaginary) {
-        this.fftsub(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, 1);
+    public void executeFFT(Double[] real, Double[] imaginary) {
+        this.executeTransform(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, 1);
     }
 
     /**
-     * Executes IFFT (Inverse Fast Fourier Transform) calculation.
+     * Executes Inverse FFT (Inverse Fast Fourier Transform) calculation.
      * @param real       Array of real part of complex sine waves.
      * @param imaginary  Array of imaginary part of complex sine waves.
      */
-    public void ifft(Double[] real, Double[] imaginary) {
-        fftsub(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, -1);
+    public void executeInverseFFT(Double[] real, Double[] imaginary) {
+        executeTransform(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, -1);
         for (int i = 0; i < this.sampleNumber; i++) {
             real[i] /= this.sampleNumber;
             imaginary[i] /= this.sampleNumber;
@@ -50,8 +53,8 @@ public class FFT {
 
     /**
      * Executes Bit-reversal permutation
-     * @param sampleNumber number of sample
-     * @return             Bit-reversed array
+     * @param sampleNumber Number of sample data.
+     * @return Bit-reversed array
      */
     private static int[] makeBitReversedArray(int sampleNumber) {
         int[] bitRevArray = new int[sampleNumber];
@@ -77,8 +80,8 @@ public class FFT {
     /**
      * Prepares array of sine values
      * Note: Cosine values are not necessary because they can be obtained by shifting phase (π/2) of sine values.
-     * @param sampleNumber
-     * @return Array of sine values
+     * @param sampleNumber Number of sample data.
+     * @return Array of sine values.
      */
     private static Double[] makeSinArray(int sampleNumber) {
         Double[] sinArray = new Double[sampleNumber + sampleNumber / 4];
@@ -121,7 +124,16 @@ public class FFT {
         return sinArray;
     }
 
-    private static void fftsub(
+    /**
+     * Executes transform with butterfly calculation.
+     * @param sampleNumber Number of sample data.
+     * @param bitRevArray  Bit-reversed array.
+     * @param sinArray     Array of sine values.
+     * @param real         Real part of sample data.
+     * @param imaginary    Imaginary part of sample data.
+     * @param sign         +1: Executes FFT. -1: Executes Inverse FFT.
+     */
+    private static void executeTransform(
             int sampleNumber,
             int[] bitRevArray,
             Double[] sinArray,
@@ -142,7 +154,7 @@ public class FFT {
             }
         }
 
-        for (int k = 1; k < sampleNumber; k *= 2) {     // k : 2のべき乗(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, ...)
+        for (int k = 1; k < sampleNumber; k *= 2) {     // k : 2のべき乗(1, 2, 4, 8, 16, 32, 64, 128, 256, ...)
             int sinIndex = 0;
             int d = sampleNumber / (k * 2);
 
