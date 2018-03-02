@@ -6,10 +6,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import tech.tkys.fft.test.FFTTestService;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PrimaryRootPaneController implements javafx.fxml.Initializable {
@@ -116,7 +114,7 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
             return;
         }
 
-        this.fftData = fftTestService.executeFFT2(
+        this.fftData = fftTestService.executeFFT(
                 this.samplingFrequency,
                 this.samplingNumber,
                 this.timeSeries.getTimeSeries());

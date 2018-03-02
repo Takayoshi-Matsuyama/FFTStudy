@@ -2,13 +2,12 @@ package tech.tkys.fft.main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import tech.tkys.fft.test.FFTTestService;
 
 public class Main extends Application {
 
     public static void main(String[] args) {
 
-        FFTTestService.executeFFTTest2();
+        FFTTestService.executeFFTTest();
 
         launch(args);
     }
