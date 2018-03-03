@@ -10,12 +10,15 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * The controller for JavaFX GUI.
+ */
 public class PrimaryRootPaneController implements javafx.fxml.Initializable {
 
     double samplingFrequency = 1024.0;
     int samplingNumber = 1024;
     TimeSeriesDataSet timeSeries;
-    FFTDataSet fftData;
+    FrequencyDataSet fftData;
 
     @FXML
     private TextField samplingFrequencyTextField;
@@ -56,12 +59,12 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
             this.samplingNumber = 1024;
         }
 
-        FFTTestService fftTestService = null;
-        Object service = ServiceContainer.getService("FFTTestService");
-        if ((service instanceof FFTTestService) == false) {
+        FFTService fftTestService = null;
+        Object service = ServiceContainer.getService("FFTService");
+        if ((service instanceof FFTService) == false) {
             return;
         } else {
-            fftTestService = (FFTTestService)service;
+            fftTestService = (FFTService)service;
         }
 
         String selectedFunction = (String)this.functionChoiceBox.getSelectionModel().getSelectedItem();
@@ -102,12 +105,12 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
 
     @FXML
     public void onExecuteFFTButtonClicked(ActionEvent event) {
-        FFTTestService fftTestService = null;
-        Object service = ServiceContainer.getService("FFTTestService");
-        if ((service instanceof FFTTestService) == false) {
+        FFTService fftTestService = null;
+        Object service = ServiceContainer.getService("FFTService");
+        if ((service instanceof FFTService) == false) {
             return;
         } else {
-            fftTestService = (FFTTestService)service;
+            fftTestService = (FFTService)service;
         }
 
         if (this.timeSeries == null) {

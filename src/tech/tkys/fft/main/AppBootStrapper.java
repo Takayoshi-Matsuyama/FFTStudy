@@ -8,15 +8,23 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * アプリケーションを起動する（初期化とメインウィンドウの表示）
+ * Starts the application.
  */
 public class AppBootStrapper {
+    /**
+     * Starts the application.
+     * @param primaryStage JavaFX primary stage.
+     */
     public void startApplication(Stage primaryStage) {
-        ServiceContainer.registerService("FFTTestService", new FFTTestService());
+        ServiceContainer.registerService("FFTService", new FFTService());
 
         this.showPrimaryStage(primaryStage);
     }
 
+    /**
+     * Shows the primary stage.
+     * @param primaryStage JavaFX primary stage.
+     */
     private void showPrimaryStage(Stage primaryStage) {
         Parent root = null;
         try {
@@ -30,7 +38,7 @@ public class AppBootStrapper {
             e.printStackTrace();
         }
 
-        primaryStage.setTitle("FFTLogic");
+        primaryStage.setTitle("FFT");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

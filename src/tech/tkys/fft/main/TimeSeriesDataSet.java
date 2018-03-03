@@ -2,6 +2,9 @@ package tech.tkys.fft.main;
 
 import java.util.ArrayList;
 
+/**
+ * Data set in time series domain.
+ */
 public class TimeSeriesDataSet {
     private ArrayList<Double> timeStamps;
     private ArrayList<Double> timeSeries;

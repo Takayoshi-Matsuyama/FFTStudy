@@ -35,7 +35,7 @@ public class FFTLogic {
      * @param imaginary  Array of imaginary part of complex sine waves.
      */
     public void executeFFT(Double[] real, Double[] imaginary) {
-        this.executeTransform(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, 1);
+        this.transform(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, 1);
     }
 
     /**
@@ -44,7 +44,7 @@ public class FFTLogic {
      * @param imaginary  Array of imaginary part of complex sine waves.
      */
     public void executeInverseFFT(Double[] real, Double[] imaginary) {
-        executeTransform(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, -1);
+        transform(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, -1);
         for (int i = 0; i < this.sampleNumber; i++) {
             real[i] /= this.sampleNumber;
             imaginary[i] /= this.sampleNumber;
@@ -125,7 +125,7 @@ public class FFTLogic {
     }
 
     /**
-     * Executes transform with butterfly calculation.
+     * Executes transformation with butterfly calculation.
      * @param sampleNumber Number of sample data.
      * @param bitRevArray  Bit-reversed array.
      * @param sinArray     Array of sine values.
@@ -133,7 +133,7 @@ public class FFTLogic {
      * @param imaginary    Imaginary part of sample data.
      * @param sign         +1: Executes FFT. -1: Executes Inverse FFT.
      */
-    private static void executeTransform(
+    private static void transform(
             int sampleNumber,
             int[] bitRevArray,
             Double[] sinArray,

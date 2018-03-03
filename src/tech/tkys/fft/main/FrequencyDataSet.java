@@ -2,11 +2,14 @@ package tech.tkys.fft.main;
 
 import java.util.ArrayList;
 
-public class FFTDataSet {
+/**
+ * Data set in frequency domain.
+ */
+public class FrequencyDataSet {
     private ArrayList<Double> frequencies;
     private ArrayList<Double> fourierCoefficients;
 
-    public FFTDataSet(ArrayList<Double> frequencies, ArrayList<Double> fourierCoefficients) {
+    public FrequencyDataSet(ArrayList<Double> frequencies, ArrayList<Double> fourierCoefficients) {
         if (frequencies == null) {
             throw new IllegalArgumentException("'frequencies' is null.");
         }
