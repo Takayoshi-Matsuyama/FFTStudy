@@ -36,6 +36,10 @@ public class FFTLogic {
      */
     public void executeFFT(Double[] real, Double[] imaginary) {
         this.transform(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, 1);
+        for (int i = 0; i < this.sampleNumber; i++) {
+            real[i] /= this.sampleNumber;
+            imaginary[i] /= this.sampleNumber;
+        }
     }
 
     /**
@@ -45,10 +49,6 @@ public class FFTLogic {
      */
     public void executeInverseFFT(Double[] real, Double[] imaginary) {
         transform(this.sampleNumber, this.bitRevArray, this.sinArray, real, imaginary, -1);
-        for (int i = 0; i < this.sampleNumber; i++) {
-            real[i] /= this.sampleNumber;
-            imaginary[i] /= this.sampleNumber;
-        }
     }
 
     /**
