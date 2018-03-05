@@ -29,6 +29,12 @@ public class FFTService {
                 timestamps.add(t);
                 timeSeries.add(0.1*Math.sin(2.0*Math.PI*100.0*t)+0.2*Math.sin(2.0*Math.PI*200.0*t)+0.3*Math.sin(2.0*Math.PI*300.0*t));
             }
+        } else if (function.equals("sin(2*PI*10.5t)")) {
+            for (int i = 0; i < sampleNumber; i++) {
+                double t = dt * i;
+                timestamps.add(t);
+                timeSeries.add(Math.sin(2.0*Math.PI*10.5*t));
+            }
         }
 
         return new TimeSeriesDataSet(timestamps, timeSeries);

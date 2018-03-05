@@ -47,10 +47,10 @@
             <ChoiceBox fx:id="functionChoiceBox" layoutX="14.0" layoutY="57.0" prefHeight="27.0" prefWidth="730.0" />
             <Button fx:id="clearButton" layoutX="18.0" layoutY="556.0" mnemonicParsing="false" onAction="#onClearButtonClicked" text="Clear" />
             <Label layoutX="27.0" layoutY="22.0" text="Sampling Frequency" />
-            <Label layoutX="395.0" layoutY="22.0" text="Sampling Number" />
+            <Label layoutX="395.0" layoutY="22.0" text="Sample Number" />
             <TextField fx:id="samplingFrequencyTextField" alignment="CENTER_RIGHT" layoutX="163.0" layoutY="17.0" />
             <Label layoutX="337.0" layoutY="22.0" text="Hz" />
-            <TextField fx:id="samplingNumberTextField" alignment="CENTER_RIGHT" layoutX="519.0" layoutY="17.0" />
+            <TextField fx:id="sampleNumberTextField" alignment="CENTER_RIGHT" layoutX="519.0" layoutY="17.0" />
             <Label layoutX="704.0" layoutY="22.0" text="Point" />
             <Button fx:id="dumpTimeSeriesButton" layoutX="18.0" layoutY="146.0" mnemonicParsing="false" onAction="#onDumpTimeSeriesButtonClicked" text="Dump Time Series" />
             <Button fx:id="dumpFFTButton" layoutX="18.0" layoutY="389.0" mnemonicParsing="false" onAction="#onDumpFFTButtonClicked" text="Dump FFT" />

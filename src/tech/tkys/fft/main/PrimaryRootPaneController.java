@@ -24,7 +24,7 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
     private TextField samplingFrequencyTextField;
 
     @FXML
-    private TextField samplingNumberTextField;
+    private TextField sampleNumberTextField;
 
     @FXML
     private ChoiceBox functionChoiceBox;
@@ -38,9 +38,10 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.samplingFrequencyTextField.setText("1024");
-        this.samplingNumberTextField.setText("1024");
+        this.sampleNumberTextField.setText("1024");
         this.functionChoiceBox.getItems().addAll(
-                "0.1*sin(2*PI*100t)+0.2*sin(2*PI*200t)+0.3*sin(2*PI*300t)");
+                "0.1*sin(2*PI*100t)+0.2*sin(2*PI*200t)+0.3*sin(2*PI*300t)",
+                "sin(2*PI*10.5t)");
         this.functionChoiceBox.getSelectionModel().selectFirst();
     }
 
@@ -52,7 +53,7 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
 
         try {
             this.samplingFrequency = Double.parseDouble(this.samplingFrequencyTextField.getText());
-            this.samplingNumber = Integer.parseInt(this.samplingNumberTextField.getText());
+            this.samplingNumber = Integer.parseInt(this.sampleNumberTextField.getText());
         } catch (NumberFormatException e) {
             e.printStackTrace();
             this.samplingFrequency = 1024.0;
@@ -80,6 +81,7 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
                     this.timeSeries.getTimeStamps().get(i),
                     this.timeSeries.getTimeSeries().get(i)));
 
+            // グラフの表示範囲を絞る
             if (i > 98) {
                 break;
             }
@@ -129,6 +131,11 @@ public class PrimaryRootPaneController implements javafx.fxml.Initializable {
             xyChartSeries.getData().add(new XYChart.Data<>(
                     this.fftData.getFrequencies().get(i),
                     this.fftData.getFourierCoefficients().get(i)));
+
+            // グラフの表示範囲を絞る
+//            if (i > 40) {
+//                break;
+//            }
         }
 
         this.frequencyLineChart.getData().add(xyChartSeries);
